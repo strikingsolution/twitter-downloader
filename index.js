@@ -10,9 +10,12 @@ const AsyncRetry = require("async-retry");
 const { setTimeout } = require("timers/promises");
 
 const express = require('express');
+const serverless = require("serverless-http");
 
 const app = express();
 const port = process.env.PORT || 3000;
+const router = express.Router();
+
 
 //initialize CMD arg structure
 program
@@ -139,11 +142,11 @@ function saveMediaToFile(buffer, filePath) {
   fs.writeFileSync(filePath, buffer);
 }
 
-app.use(express.json());
+app.use("/.netlify/functions/app", router);
 
-let isVideo
+let isVideo;
 
-app.post('/downloadTweetMedia', async (req, res) => {
+router.post('/downloadTweetMedia', async (req, res) => {
   const { tweetId } = req.body;
 
   try {
@@ -155,6 +158,9 @@ app.post('/downloadTweetMedia', async (req, res) => {
   }
 });
 
+router.get("/", (req, res) => {
+  res.send("App is running..");
+});
 
 async function downloadTweetMedia(tweetId) {
   embedUrl = `https://platform.twitter.com/embed/Tweet.html?id=${tweetId}`;
@@ -195,3 +201,5 @@ if (body.photos) {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports.handler = serverless(app);

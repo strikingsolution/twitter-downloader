@@ -88,3 +88,5 @@ Thumbs.db
 
 # xvidrip specific
 *.mp4
+
+.netlify
