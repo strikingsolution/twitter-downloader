@@ -41,7 +41,7 @@ function print(strToPrint) {
 // Puppeteer function to get tweet result
 async function getTweetResult(embedUrl) {
   print("Opening puppeteer...");
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   let tweetResult;
 
@@ -52,7 +52,7 @@ async function getTweetResult(embedUrl) {
     }
     interceptedRequest.continue();
   });
-  console.log(embedUrl)
+  console.log(tweetResult)
   await page.goto(embedUrl);
 
   while (!tweetResult) {
@@ -85,7 +85,7 @@ app.post('/downloadTweetMedia', async (req, res) => {
     const mediaFiles = await downloadTweetMedia(tweetId);
     res.json({ success: true, isVideo, mediaFiles });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });
