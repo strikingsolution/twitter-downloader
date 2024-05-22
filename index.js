@@ -86,7 +86,10 @@ let userDestination = programArgs[1];
 // Puppeteer function to get tweet result
 async function getTweetResult(embedUrl) {
   print("Opening puppeteer...");
-  const browser = await puppeteer.launch({ headless: !programOptions.withHead });
+  const browserFetcher = puppeteer.createBrowserFetcher();
+      let revisionInfo = await browserFetcher.download('1095492');
+  const browser = await puppeteer.launch({  executablePath: revisionInfo.executablePath, ignoreDefaultArgs: ['--disable-extensions'], headless: true,
+  args: ['--no-sandbox', "--disabled-setupid-sandbox"] });
   const page = await browser.newPage();
   let tweetResult;
 
