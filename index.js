@@ -41,7 +41,7 @@ function print(strToPrint) {
 // Puppeteer function to get tweet result
 async function getTweetResult(embedUrl) {
   print("Opening puppeteer...");
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({executablePath:'/.cache/puppeteer/chrome/linux-125.0.6422.60', headless: false});
   const page = await browser.newPage();
   let tweetResult;
 
@@ -76,7 +76,7 @@ function identifyBestVariant(variantArray) {
 
 app.use(express.json());
 
-let isVideo
+let isVideo;
 
 app.post('/downloadTweetMedia', async (req, res) => {
   const { tweetId } = req.body;
