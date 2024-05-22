@@ -52,7 +52,7 @@ async function getTweetResult(embedUrl) {
     }
     interceptedRequest.continue();
   });
-  console.log(tweetResult)
+  console.log(embedUrl)
   await page.goto(embedUrl);
 
   while (!tweetResult) {
