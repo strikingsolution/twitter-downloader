@@ -9,10 +9,13 @@ const axios = require('axios');
 const AsyncRetry = require("async-retry");
 const { setTimeout } = require("timers/promises");
 
+
 const express = require('express');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const filePath = path.join(__dirname, '.cache/puppeteer/chrome/win64-125.0.6422.60/chrome-win64/chrome.exe');
 
 //initialize CMD arg structure
 program
@@ -41,9 +44,10 @@ function print(strToPrint) {
 // Puppeteer function to get tweet result
 async function getTweetResult(embedUrl) {
   print("Opening puppeteer...");
+  console.log(path.join(__dirname, '.cache/puppeteer/chrome/win64-125.0.6422.60/chrome-win64/chrome.exe'))
   const browser = await puppeteer.launch({
     ignoreDefaultArgs: ['--disable-extensions'],
-    executablePath:'src/.cache/puppeteer/chrome/win64-121.0.6167.85/chrome-win64/', headless: false
+    executablePath:filePath, headless: false
   });
   const page = await browser.newPage();
   let tweetResult;
@@ -109,7 +113,7 @@ async function downloadTweetMedia(tweetId) {
   const body = await fetchResponse.data;
   const data = [];
 
-  console.log(body)
+  // console.log(body)
 
 if (body.video) {
   isVideo = true;
