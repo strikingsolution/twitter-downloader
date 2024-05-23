@@ -19,6 +19,6 @@
     "commander": "^11.0.0",
     "concurrently": "^8.2.2",
     "express": "^4.19.2",
-    "puppeteer": "^21.3.8"
+    "puppeteer": "^21.11.0"
   }
 }

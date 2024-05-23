@@ -90,3 +90,4 @@ Thumbs.db
 *.mp4
 
 .netlify
+.cache
